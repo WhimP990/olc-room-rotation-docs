@@ -45,6 +45,11 @@ detection. Only the login is interactive, and a human does it.
 - `vault/entrypoint.sh` - Xvfb :99, x11vnc bound to localhost and
   websockify/noVNC run continuously and are cheap. The browser is launched per
   operation and closed after it, which is what keeps a 2 GB box usable.
+- `sidOf` picks the `Session_id` cookie set for `.yandex.ru` (then `.yandex.com`).
+  The jar also holds stale copies on sibling domains such as `.ya.ru`, set once
+  at login and never rotated; handing one of those to olcWave is exactly how the
+  deployment lost room minting on 2 September while both accounts were still
+  logged in.
 - `init: true` in compose: Node as PID 1 does not reap Chromium's exiting
   helpers, and they accumulate as zombies without it.
 - Sessions live in the `vault_data` volume under `/data/accounts/<key>/profile`.
