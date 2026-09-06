@@ -55,6 +55,18 @@ tunnel 30 minutes early. Observed once in ~30 hours of unattended running.
 is attached and there is nowhere for it to go — keep serving and keep retrying
 the standby; reset freely only when `client_live` is false.
 
+**The 24-hour room lifetime is an assumption, and it was wrong at least once.**
+`ROOM_LIFETIME_SECONDS` drives the `near expiry` path. On 2-6 September 2026 a
+room stayed alive for over four days with the srv sitting in it, while the
+rotator had no working token to build a standby (see `07-token-vault.md` for
+why). The moment a standby appeared, `near expiry` promoted it within two
+minutes, with `client_has_standby=False` - the client was not attached at the
+time, so nothing broke, but its stored list was left holding only the retired
+room. On a whitelist that is the stale-list dead end described below. Two
+consequences: the near-expiry threshold should be measured, not assumed, and
+the forced path should keep the old room (or keep serving it) until the client
+has actually been told about the new one.
+
 **There is no recovery from a fully stale room list.** Everything above reduces
 the probability of a client holding only dead rooms; nothing recovers from it.
 The fix has to come from outside the room system — a rescue transport that does
