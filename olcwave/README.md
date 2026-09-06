@@ -57,11 +57,13 @@ header, while the current room is still up.
 4. `04-persistence.md` — what survives a restart, and what deliberately does not.
 5. `05-srv-container.md` — the srv container, its shutdown, standby adoption.
 6. `06-operations.md` — the panel toggle, reading the logs, known limitations.
+7. `07-token-vault.md` — the token vault sidecar: why, how a login happens, what to know before enabling it.
 
 ## Scope note
 
 The rotation subsystem is documented from the code and from live behaviour.
-Three other things changed in the same tree and are **not** covered here, because
-they are separate work I did not author or audit: the token vault
-(`profiles/vault_client.py`, `vault_router.py`, `frontend/src/api/vault.ts`),
-the `users/` schema additions, and the frontend auth/router changes.
+The token vault (a Playwright/noVNC sidecar that keeps Yandex sessions warm and
+refreshes managed tokens) was built in the same tree and is described in
+`07-token-vault.md`. Two smaller things changed alongside and are covered only
+by their commit messages: the `users/` per-user profile column and the
+container image changes.
