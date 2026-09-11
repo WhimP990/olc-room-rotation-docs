@@ -37,6 +37,7 @@ Worth noticing:
 | `adopted existing standby ... on <room>` | a restart kept a warm server instead of destroying it |
 | `resumed: N slot(s), M pooled room(s)` | state came back from storage |
 | `primary died -> fresh room <id> (HOLD)` | **see limitations below** |
+| `standby <name> exists but is not running - respawning` | the standby's srv exited (usually it gave up joining its room); the container is removed and a new standby minted on the same tick. Before 11 September 2026 a stopped standby was mistaken for a warm one until the swap deadline. |
 
 ## Known limitations
 
